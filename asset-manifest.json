@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/akouviyk/charliefryer/static/css/main.de7a0e8b.css",
-    "main.js": "/akouviyk/charliefryer/static/js/main.2131f0a5.js",
-    "static/js/453.e443f962.chunk.js": "/akouviyk/charliefryer/static/js/453.e443f962.chunk.js",
-    "index.html": "/akouviyk/charliefryer/index.html",
-    "main.de7a0e8b.css.map": "/akouviyk/charliefryer/static/css/main.de7a0e8b.css.map",
-    "main.2131f0a5.js.map": "/akouviyk/charliefryer/static/js/main.2131f0a5.js.map",
-    "453.e443f962.chunk.js.map": "/akouviyk/charliefryer/static/js/453.e443f962.chunk.js.map"
+    "main.css": "/charliefryer/static/css/main.de7a0e8b.css",
+    "main.js": "/charliefryer/static/js/main.e20133a4.js",
+    "static/js/453.e443f962.chunk.js": "/charliefryer/static/js/453.e443f962.chunk.js",
+    "index.html": "/charliefryer/index.html",
+    "main.de7a0e8b.css.map": "/charliefryer/static/css/main.de7a0e8b.css.map",
+    "main.e20133a4.js.map": "/charliefryer/static/js/main.e20133a4.js.map",
+    "453.e443f962.chunk.js.map": "/charliefryer/static/js/453.e443f962.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.de7a0e8b.css",
-    "static/js/main.2131f0a5.js"
+    "static/js/main.e20133a4.js"
   ]
 }
