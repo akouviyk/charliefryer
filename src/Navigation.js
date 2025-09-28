@@ -9,8 +9,10 @@ const Navigation = () => {
 
     const navItems = [
         { path: '/', label: 'Portfolio', icon: Camera },
+        { path: '/services', label: 'Services', icon: Mail },
         { path: '/about', label: 'About', icon: User },
         { path: '/contact', label: 'Contact', icon: Mail },
+
     ];
 
     return (
