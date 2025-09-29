@@ -109,34 +109,6 @@ const About = () => {
                     </div>
                 </motion.section>
 
-                {/* Achievements Grid */}
-                <motion.section
-                    initial={{ y: 60, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="achievements-section"
-                >
-                    <h2 className="section-title centered">Why Couples Choose Me</h2>
-                    <div className="achievements-grid">
-                        {achievements.map((achievement, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ scale: 0.8, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.6 + index * 0.1 }}
-                                className="achievement-card"
-                            >
-                                <div className="achievement-icon-wrapper">
-                                    {achievement.icon}
-                                </div>
-                                <div className="achievement-number">{achievement.number}</div>
-                                <div className="achievement-label">{achievement.label}</div>
-                                <div className="achievement-description">{achievement.description}</div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.section>
-
                 {/* Philosophy Section */}
                 <motion.section
                     initial={{ y: 60, opacity: 0 }}
