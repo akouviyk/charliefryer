@@ -32,13 +32,6 @@ const Services = () => {
             icon: "📸",
             features: ["Social media ready", "Brand storytelling", "Professional web images"]
         },
-        {
-            title: "Aerial & Scenic Views",
-            description:
-                "See the Virgin Islands from a whole new perspective. My aerial photography adds breathtaking drama to your wedding, showcases your property's stunning location, or simply captures the incredible beauty of island life from above.",
-            icon: "🚁",
-            features: ["Unique perspectives", "Stunning landscapes", "Property showcasing"]
-        },
     ];
 
     return (
@@ -47,7 +40,7 @@ const Services = () => {
             <div className="services-header">
                 <div className="header-content">
                     <h1 className="main-title">
-                        Capturing Life's Beautiful Moments
+                        Capturing Life's Candid Moments
                     </h1>
                     <div className="title-accent"></div>
                     <p className="subtitle">
