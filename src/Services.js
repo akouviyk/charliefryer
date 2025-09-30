@@ -7,7 +7,7 @@ const Services = () => {
         {
             title: "Weddings & Celebrations",
             description:
-                "Your love story deserves to be told beautifully. I capture the genuine laughter, tender moments, and joyful celebrations that make your day uniquely yours. As a second shooter or supporting photographer, I ensure every precious detail is preserved — from the quiet glances to the dance floor magic.",
+                "Your story deserves to be told beautifully. I capture the genuine laughter, tender moments, and joyful celebrations that make your day uniquely yours. As a second shooter or supporting photographer, I ensure every precious detail is preserved — from the quiet glances to the dance floor magic.",
             icon: "💍",
             features: ["Natural, candid moments", "Comprehensive coverage", "Timeless memories"]
         },
@@ -44,7 +44,7 @@ const Services = () => {
                     </h1>
                     <div className="title-accent"></div>
                     <p className="subtitle">
-                        Professional photography services in the Virgin Islands, specializing in weddings, lifestyle, and business photography that tells your unique story.
+                        Professional photography services in the Virgin Islands, Bridal Party, lifestyle, and business photography that tells your unique story.
                     </p>
                 </div>
             </div>
@@ -94,7 +94,7 @@ const Services = () => {
                 {/* Value Proposition */}
                 <div className="value-section">
                     <div className="value-content">
-                        <h3 className="value-title">Why Choose Island Moments Photography?</h3>
+                        <p className="value-title">Why Choose Island Soul Photography?</p>
                         <p className="value-subtitle">
                             Local expertise meets professional quality. I understand the unique beauty of the Virgin Islands and know exactly how to capture your special moments in this tropical paradise.
                         </p>

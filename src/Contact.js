@@ -59,7 +59,7 @@ const Contact = () => {
                         </div>
                         <div className="contact-item">
                             <MapPin size={20} />
-                            <span>Portland, Oregon</span>
+                            <span>St.John, USVI</span>
                         </div>
                     </div>
                 </motion.div>

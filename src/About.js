@@ -163,11 +163,11 @@ const About = () => {
                 >
                     <div className="hero-badge">
                         <Camera size={20} />
-                        <span>Professional Wedding Photographer</span>
+                        <span>Professional Photographer</span>
                     </div>
-                    <h1 className="hero-title">Hi, I'm Charley Marie</h1>
+                    <h1 className="hero-title">I'm Charley Marie</h1>
                     <p className="hero-subtitle">
-                        Your island wedding photographer who believes every love story deserves to be told beautifully against the backdrop of paradise.
+                        Your island photographer who believes every story deserves to be told beautifully against the backdrop of paradise.
                     </p>
                     <div className="hero-location">
                         <MapPin size={18} />
