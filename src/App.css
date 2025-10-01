@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
 .App {
   text-align: center;
 }
@@ -217,6 +219,7 @@
   line-height: 1.1;
   margin-bottom: 25px;
   letter-spacing: -0.02em;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .hero-subtitle {
@@ -904,6 +907,7 @@
   color: white;
   margin-bottom: 20px;
   line-height: 1.2;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .value-subtitle {
@@ -1247,6 +1251,7 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .contact-hero::before {
