@@ -1,9 +1,105 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, Heart, MapPin, Award, Users, Calendar } from 'lucide-react';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import './App.css';
+import { db } from './firebase'
+
+
+
+const s3Client = new S3Client({
+    region: process.env.REACT_APP_AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+    },
+});
+
 
 const About = () => {
+    const [aboutImages, setAboutImages] = useState({ bannerImg: '', aboutmeImg: '' });
+    const [isUploading, setIsUploading] = useState(false);
+
+    // Fetch existing images on component mount
+    useEffect(() => {
+        fetchAboutImages();
+    }, []);
+
+    const fetchAboutImages = async () => {
+        try {
+            const docRef = doc(db, 'aboutImages', 'images');
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                setAboutImages(docSnap.data());
+            }
+        } catch (error) {
+            console.error('Error fetching about images:', error);
+        }
+    };
+
+    const handleImageUpload = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                uploadAboutImage(file);
+            }
+        };
+        input.click();
+    };
+
+    const uploadAboutImage = async (file) => {
+        try {
+            setIsUploading(true);
+
+            const fileName = `about-images/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+
+            // Convert file to ArrayBuffer first, then to Uint8Array
+            const arrayBuffer = await file.arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+
+            const uploadParams = {
+                Bucket: process.env.REACT_APP_AWS_S3_BUCKET,
+                Key: fileName,
+                Body: uint8Array,
+                ContentType: file.type,
+            };
+
+
+            await s3Client.send(new PutObjectCommand(uploadParams));
+            const s3Url = `https://${process.env.REACT_APP_AWS_S3_BUCKET}.s3.${process.env.REACT_APP_AWS_REGION}.amazonaws.com/${fileName}`;
+
+
+            // Update the aboutmeImg in the aboutImages object
+            const updatedImages = {
+                ...aboutImages,
+                aboutmeImg: s3Url
+            };
+
+            // Save to Firestore
+            await setDoc(doc(db, 'aboutImages', 'images'), updatedImages);
+
+            // Update local state
+            setAboutImages(updatedImages);
+
+
+        } catch (error) {
+            console.error('Error uploading about image:', error);
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.name
+            });
+            alert('Error uploading image. Please try again.');
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
     const achievements = [
         {
             icon: <Camera className="achievement-icon" />,
@@ -53,7 +149,12 @@ const About = () => {
         >
             {/* Hero Section */}
             <div className="about-hero">
-                <div className="hero-background"></div>
+                <div
+                    className="hero-background"
+                    style={aboutImages.bannerImg ? {
+                        backgroundImage: `url(${aboutImages.bannerImg})`
+                    } : {}}
+                ></div>
                 <motion.div
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -62,11 +163,11 @@ const About = () => {
                 >
                     <div className="hero-badge">
                         <Camera size={20} />
-                        <span>Professional Wedding Photographer</span>
+                        <span>Professional Photographer</span>
                     </div>
-                    <h1 className="hero-title">Hi, I'm Charley Marie</h1>
+                    <h1 className="hero-title" style={{ textTransform: 'uppercase' }}>Hi! Im Charley Marie</h1>
                     <p className="hero-subtitle">
-                        Your island wedding photographer who believes every love story deserves to be told beautifully against the backdrop of paradise.
+                        Your island photographer who believes every story deserves to be told beautifully against the backdrop of paradise.
                     </p>
                     <div className="hero-location">
                         <MapPin size={18} />
@@ -101,12 +202,68 @@ const About = () => {
                             </div>
                         </div>
                         <div className="story-image">
-                            <div className="image-placeholder">
-                                <Camera size={60} />
-                                <span>Your Photo Here</span>
-                            </div>
+                            {aboutImages.aboutmeImg ? (
+                                <div
+                                    className="story-image-loaded"
+                                    style={{
+                                        backgroundImage: `url(${aboutImages.aboutmeImg})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        width: '100%',
+                                        height: '100%',
+                                        borderRadius: '8px'
+                                    }}
+                                >
+                                    <div className="image-overlay">
+                                        <button
+                                            onClick={handleImageUpload}
+                                            className="change-image-btn"
+                                            disabled={isUploading}
+                                        >
+                                            {isUploading ? 'Uploading...' : 'Change Photo'}
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    className="image-placeholder"
+                                    onClick={handleImageUpload}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <Camera size={60} />
+                                    <span>{isUploading ? 'Uploading...' : 'Your Photo Here'}</span>
+                                </div>
+                            )}
                         </div>
                     </div>
+                </motion.section>
+
+                {/* Achievements Grid */}
+                <motion.section
+                    initial={{ y: 60, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                    className="achievements-section"
+                >
+                    {/* <h2 className="section-title centered">Why Couples Choose Me</h2>
+                    <div className="achievements-grid">
+                        {achievements.map((achievement, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.6 + index * 0.1 }}
+                                className="achievement-card"
+                            >
+                                <div className="achievement-icon-wrapper">
+                                    {achievement.icon}
+                                </div>
+                                <div className="achievement-number">{achievement.number}</div>
+                                <div className="achievement-label">{achievement.label}</div>
+                                <div className="achievement-description">{achievement.description}</div>
+                            </motion.div>
+                        ))}
+                    </div> */}
                 </motion.section>
 
                 {/* Philosophy Section */}
@@ -165,8 +322,8 @@ const About = () => {
                     className="about-cta-section"
                 >
                     <div className="cta-content">
-                        <h2 className="cta-title">Ready to Create Magic Together?</h2>
-                        <p className="cta-subtitle">
+                        <h2 className="cta-title" style={{ color: "whitesmoke" }}>Ready to Create Magic Together?</h2>
+                        <p className="cta-subtitle" style={{ color: "whitesmoke" }}>
                             I'd love to hear about your vision and help bring your dream wedding to life in paradise.
                         </p>
                         <div className="cta-buttons">
@@ -179,7 +336,10 @@ const About = () => {
                         </div>
                         <div className="cta-note">
                             <div className="available-indicator"></div>
-                            Currently booking 2025 weddings • Free consultation included
+                            <p style={{ color: 'white' }}>
+                                Currently booking 2025 weddings • Free consultation included
+
+                            </p>
                         </div>
                     </div>
                 </motion.section>

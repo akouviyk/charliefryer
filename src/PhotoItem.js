@@ -1,6 +1,8 @@
 import React, { useRef, useMemo } from "react";
 import { motion, useInView, useMotionValue } from "framer-motion";
 import { Trash2, Move, Sparkles, Zap } from "lucide-react";
+import './App.css';
+import './PhotographyPortfolio.css';
 
 const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, handleDragOver, handleDrop, index, onDelete, onUpdate, isEditMode }) => {
     const ref = useRef(null);
@@ -67,12 +69,13 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                 z: 50,
                 transition: { duration: 0.3 },
             }}
-            className={`photo-item ${isEditMode ? "edit-mode" : ""}`}
+            className={`photo-item ${isEditMode ? 'edit-mode' : ''}`}
             style={{
                 background: backgroundGradient,
                 x: mouseX,
                 y: mouseY, // smooth parallax without re-render
             }}
+
             draggable={isEditMode}
             onDragStart={(e) => handleDragStart(e, photo)}
             onDragOver={handleDragOver}
@@ -101,10 +104,8 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                     transition={{ duration: 0.5 }}
                 />
 
-                {/* Overlay */}
                 <motion.div className="photo-overlay" />
 
-                {/* Sparkle effect */}
                 <motion.div
                     className="photo-sparkle"
                     whileHover={{
@@ -115,7 +116,6 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                 />
             </div>
 
-            {/* Content overlay */}
             <motion.div
                 className="photo-content"
                 initial={{ opacity: 0 }}
@@ -157,8 +157,7 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                                 whileTap={{ scale: 0.9 }}
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    deletePhoto(photo.id);
-                                    // handleDelete
+                                    handleDelete()
                                 }}
                                 className="control-button delete-button"
                             >
@@ -197,104 +196,5 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
 };
 
 export default PhotoItem;
-
-
-// PhotoItem.js
-// import React from 'react';
-// import { motion } from 'framer-motion';
-// import { Edit3, Trash2, Move } from 'lucide-react';
-
-// const PhotoItem = ({
-//     photo,
-//     index,
-//     onDelete,
-//     onUpdate,
-//     isEditMode,
-//     onDragStart,
-//     onDragOver,
-//     onDrop
-// }) => {
-//     const handleDragStart = (e) => {
-//         onDragStart(e, photo);
-//     };
-
-//     const handleDragOver = (e) => {
-//         onDragOver(e);
-//     };
-
-//     const handleDrop = (e) => {
-//         onDrop(e, photo);
-//     };
-
-//     return (
-//         <motion.div
-//             layout
-//             initial={{ opacity: 0, scale: 0.8, y: 50 }}
-//             animate={{ opacity: 1, scale: 1, y: 0 }}
-//             exit={{ opacity: 0, scale: 0.8, y: -50 }}
-//             transition={{
-//                 type: "spring",
-//                 damping: 20,
-//                 stiffness: 300,
-//                 delay: index * 0.1,
-//             }}
-//             className={`photo-item ${isEditMode ? 'edit-mode' : ''}`}
-//             draggable={isEditMode}
-//             onDragStart={handleDragStart}
-//             onDragOver={handleDragOver}
-//             onDrop={handleDrop}
-//             whileHover={{
-//                 scale: isEditMode ? 1.02 : 1.05,
-//                 zIndex: 10
-//             }}
-//         >
-//             <div className="photo-content">
-//                 <motion.img
-//                     src={photo.url}
-//                     alt={photo.title}
-//                     className="photo-image"
-//                     whileHover={{ scale: 1.1 }}
-//                     transition={{ duration: 0.3 }}
-//                 />
-
-//                 {/* Edit mode overlay */}
-//                 {isEditMode && (
-//                     <motion.div
-//                         initial={{ opacity: 0 }}
-//                         animate={{ opacity: 1 }}
-//                         className="edit-overlay"
-//                     >
-//                         <div className="edit-controls">
-//                             <motion.button
-//                                 whileHover={{ scale: 1.1, rotate: 5 }}
-//                                 whileTap={{ scale: 0.9 }}
-//                                 className="edit-button move-button"
-//                                 title="Drag to reorder"
-//                             >
-//                                 <Move size={16} />
-//                             </motion.button>
-
-//                             <motion.button
-//                                 whileHover={{ scale: 1.1, rotate: -5 }}
-//                                 whileTap={{ scale: 0.9 }}
-//                                 className="edit-button delete-button"
-//                                 onClick={() => onDelete(photo)}
-//                                 title="Delete photo"
-//                             >
-//                                 <Trash2 size={16} />
-//                             </motion.button>
-//                         </div>
-//                     </motion.div>
-//                 )}
-
-//                 {/* Photo info */}
-//                 <div className="photo-info">
-//                     <h3 className="photo-title">{photo.title}</h3>
-//                     <span className="photo-category">{photo.category}</span>
-//                 </div>
-//             </div>
-//         </motion.div>
-//     );
-// };
 
 // export default PhotoItem;

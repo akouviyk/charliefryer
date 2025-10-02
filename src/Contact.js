@@ -35,6 +35,7 @@ const Contact = () => {
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
+                    className="contact-title"
                 >
                     Get In Touch
                 </motion.h1>
@@ -59,7 +60,7 @@ const Contact = () => {
                         </div>
                         <div className="contact-item">
                             <MapPin size={20} />
-                            <span>Portland, Oregon</span>
+                            <span>St.John, USVI</span>
                         </div>
                     </div>
                 </motion.div>

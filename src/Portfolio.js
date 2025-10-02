@@ -486,7 +486,7 @@ const Portfolio = () => {
                                 transition={{ duration: 5, repeat: Infinity }}
                                 className="title-gradient"
                             >
-                                CHARLEY MARIE.
+                                ISLAND SOUL PHOTOGRAPHY
                             </motion.span>
                         </h1>
 

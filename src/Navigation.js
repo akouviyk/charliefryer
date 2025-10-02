@@ -29,7 +29,7 @@ const Navigation = () => {
                 >
                     <Link to="/">
                         <Camera size={24} />
-                        <span>CHARLEY MARIE</span>
+                        <span>ISP</span>
                     </Link>
                 </motion.div>
 
