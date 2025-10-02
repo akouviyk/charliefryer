@@ -165,7 +165,7 @@ const About = () => {
                         <Camera size={20} />
                         <span>Professional Photographer</span>
                     </div>
-                    <h1 className="hero-title">I'm Charley Marie</h1>
+                    <h1 className="hero-title" style={{ textTransform: 'uppercase' }}>Hi! Im Charley Marie</h1>
                     <p className="hero-subtitle">
                         Your island photographer who believes every story deserves to be told beautifully against the backdrop of paradise.
                     </p>
@@ -322,8 +322,8 @@ const About = () => {
                     className="about-cta-section"
                 >
                     <div className="cta-content">
-                        <h2 className="cta-title">Ready to Create Magic Together?</h2>
-                        <p className="cta-subtitle">
+                        <h2 className="cta-title" style={{ color: "whitesmoke" }}>Ready to Create Magic Together?</h2>
+                        <p className="cta-subtitle" style={{ color: "whitesmoke" }}>
                             I'd love to hear about your vision and help bring your dream wedding to life in paradise.
                         </p>
                         <div className="cta-buttons">
@@ -336,7 +336,10 @@ const About = () => {
                         </div>
                         <div className="cta-note">
                             <div className="available-indicator"></div>
-                            Currently booking 2025 weddings • Free consultation included
+                            <p style={{ color: 'white' }}>
+                                Currently booking 2025 weddings • Free consultation included
+
+                            </p>
                         </div>
                     </div>
                 </motion.section>

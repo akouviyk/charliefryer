@@ -1,6 +1,8 @@
 import React, { useRef, useMemo } from "react";
 import { motion, useInView, useMotionValue } from "framer-motion";
 import { Trash2, Move, Sparkles, Zap } from "lucide-react";
+import './App.css';
+import './PhotographyPortfolio.css';
 
 const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, handleDragOver, handleDrop, index, onDelete, onUpdate, isEditMode }) => {
     const ref = useRef(null);
@@ -67,12 +69,13 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                 z: 50,
                 transition: { duration: 0.3 },
             }}
-            className={`photo-item ${isEditMode ? "edit-mode" : ""}`}
+            className={`photo-item ${isEditMode ? 'edit-mode' : ''}`}
             style={{
                 background: backgroundGradient,
                 x: mouseX,
                 y: mouseY, // smooth parallax without re-render
             }}
+
             draggable={isEditMode}
             onDragStart={(e) => handleDragStart(e, photo)}
             onDragOver={handleDragOver}
@@ -101,10 +104,8 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                     transition={{ duration: 0.5 }}
                 />
 
-                {/* Overlay */}
                 <motion.div className="photo-overlay" />
 
-                {/* Sparkle effect */}
                 <motion.div
                     className="photo-sparkle"
                     whileHover={{
@@ -115,7 +116,6 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                 />
             </div>
 
-            {/* Content overlay */}
             <motion.div
                 className="photo-content"
                 initial={{ opacity: 0 }}
@@ -157,8 +157,7 @@ const PhotoItem = ({ photo, setSelectedPhoto, deletePhoto, handleDragStart, hand
                                 whileTap={{ scale: 0.9 }}
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    deletePhoto(photo.id);
-                                    // handleDelete
+                                    handleDelete()
                                 }}
                                 className="control-button delete-button"
                             >

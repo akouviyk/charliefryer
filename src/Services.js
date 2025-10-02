@@ -39,8 +39,8 @@ const Services = () => {
             {/* Header Section */}
             <div className="services-header">
                 <div className="header-content">
-                    <h1 className="main-title">
-                        Capturing Life's Candid Moments
+                    <h1 className="main-title" style={{ textTransform: 'uppercase' }}>
+                        Capturing Candid Moments
                     </h1>
                     <div className="title-accent"></div>
                     <p className="subtitle">
@@ -118,7 +118,7 @@ const Services = () => {
 
                 {/* CTA Section */}
                 <div className="cta-section">
-                    <h3 className="cta-title">Ready to Create Beautiful Memories?</h3>
+                    <p className="cta-title">Ready to Create Beautiful Memories?</p>
                     <p className="cta-subtitle">
                         Let's chat about your vision and how I can help bring it to life. Every great photo session starts with a conversation.
                     </p>
