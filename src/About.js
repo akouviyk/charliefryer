@@ -330,7 +330,7 @@ const About = () => {
                             <a href="/contact" className="primary-cta-btn">
                                 Let's Chat About Your Day
                             </a>
-                            <a href="/portfolio" className="secondary-cta-btn">
+                            <a href="/" className="secondary-cta-btn">
                                 View My Portfolio
                             </a>
                         </div>

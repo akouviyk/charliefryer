@@ -172,7 +172,7 @@ const Navigation = () => {
                             >
                                 <div className="mobile-nav-header">
                                     <div className="nav-logo">
-                                        <Camera size={24} />
+                                        <Camera size={24} style={{ position: 'relative', top: 5, right: 3 }} />
                                         <span>ISP</span>
                                     </div>
                                     <button

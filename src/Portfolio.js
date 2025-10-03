@@ -78,6 +78,27 @@ const Portfolio = () => {
         loadPhotos();
     }, []);
 
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (!selectedPhoto) return;
+
+            if (e.key === 'Escape') {
+                setSelectedPhoto(null);
+            } else if (e.key === 'ArrowLeft') {
+                const currentIndex = filteredPhotos.findIndex(p => p.id === selectedPhoto.id);
+                const prevIndex = currentIndex > 0 ? currentIndex - 1 : filteredPhotos.length - 1;
+                setSelectedPhoto(filteredPhotos[prevIndex]);
+            } else if (e.key === 'ArrowRight') {
+                const currentIndex = filteredPhotos.findIndex(p => p.id === selectedPhoto.id);
+                const nextIndex = currentIndex < filteredPhotos.length - 1 ? currentIndex + 1 : 0;
+                setSelectedPhoto(filteredPhotos[nextIndex]);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedPhoto, filteredPhotos]);
     const handleAuth = () => {
         setIsAuthenticated(!isAuthenticated);
         if (isAuthenticated) {
@@ -668,6 +689,7 @@ const Portfolio = () => {
                             />
                         ))}
                     </AnimatePresence>
+
                 </motion.div>
 
                 {filteredPhotos.length === 0 && (
@@ -819,6 +841,164 @@ const Portfolio = () => {
                                 <Grid size={20} />
                             </motion.div>
                             <span className="indicator-text">Edit Mode Active</span>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Enhanced Photo Modal with Carousel */}
+            <AnimatePresence>
+                {selectedPhoto && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="photo-modal"
+                        onClick={() => setSelectedPhoto(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
+                            animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, rotateY: 15 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            className="modal-content"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Carousel Navigation */}
+                            {filteredPhotos.length > 1 && (
+                                <>
+                                    <motion.button
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            const currentIndex = filteredPhotos.findIndex(p => p.id === selectedPhoto.id);
+                                            const prevIndex = currentIndex > 0 ? currentIndex - 1 : filteredPhotos.length - 1;
+                                            setSelectedPhoto(filteredPhotos[prevIndex]);
+                                        }}
+                                        className="carousel-nav carousel-prev"
+                                    >
+                                        ‹
+                                    </motion.button>
+
+                                    <motion.button
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            const currentIndex = filteredPhotos.findIndex(p => p.id === selectedPhoto.id);
+                                            const nextIndex = currentIndex < filteredPhotos.length - 1 ? currentIndex + 1 : 0;
+                                            setSelectedPhoto(filteredPhotos[nextIndex]);
+                                        }}
+                                        className="carousel-nav carousel-next"
+                                    >
+                                        ›
+                                    </motion.button>
+
+                                    {/* Carousel Indicators */}
+                                    <div className="carousel-indicators">
+                                        {filteredPhotos.map((photo, index) => (
+                                            <motion.div
+                                                key={photo.id}
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ delay: index * 0.1 }}
+                                                className={`carousel-indicator ${photo.id === selectedPhoto.id ? 'active' : ''
+                                                    }`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedPhoto(photo);
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+
+                            {/* Enhanced Close Button */}
+                            <motion.button
+                                initial={{ scale: 0, rotate: -90 }}
+                                animate={{ scale: 1, rotate: 0 }}
+                                whileHover={{
+                                    scale: 1.1,
+                                    rotate: 90,
+                                    boxShadow: "0 0 30px rgba(255,255,255,0.5)"
+                                }}
+                                whileTap={{ scale: 0.9 }}
+                                onClick={() => setSelectedPhoto(null)}
+                                className="modal-close"
+                            >
+                                ✕
+                            </motion.button>
+
+                            {/* Modal Image Container */}
+                            <div className="modal-image-container">
+                                <motion.img
+                                    key={selectedPhoto.id} // Important for animation
+                                    src={selectedPhoto.url}
+                                    alt={selectedPhoto.title}
+                                    className="modal-image"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.3 }}
+                                />
+
+                                {/* Photo Info Overlay */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 50 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    className="modal-info"
+                                >
+                                    <div className="modal-info-content">
+                                        <div>
+                                            <motion.h3
+                                                className="modal-title"
+                                                animate={{
+                                                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                                                }}
+                                                transition={{ duration: 4, repeat: Infinity }}
+                                            >
+                                                {selectedPhoto.title}
+                                            </motion.h3>
+                                            <div className="modal-tags">
+                                                <span className="modal-category">
+                                                    {selectedPhoto.category}
+                                                </span>
+                                                <div className="modal-caption">
+                                                    <Camera size={16} />
+                                                    <span className="caption-text">
+                                                        {filteredPhotos.findIndex(p => p.id === selectedPhoto.id) + 1} of {filteredPhotos.length}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <motion.div
+                                            animate={{ rotate: [0, 360] }}
+                                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                                            className="modal-sparkle"
+                                        >
+                                            <Sparkles size={24} />
+                                        </motion.div>
+                                    </div>
+                                </motion.div>
+                            </div>
+
+                            {/* Ambient Glow Effect */}
+                            <motion.div
+                                className="modal-glow"
+                                animate={{
+                                    scale: [1, 1.1, 1],
+                                    opacity: [0.3, 0.6, 0.3],
+                                }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                            />
                         </motion.div>
                     </motion.div>
                 )}

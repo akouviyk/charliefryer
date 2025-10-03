@@ -127,7 +127,7 @@ const Services = () => {
                         <a href="/contact" className="primary-btn">
                             Get In Touch
                         </a>
-                        <a href="/portfolio" className="secondary-btn">
+                        <a href="/" className="secondary-btn">
                             View My Work
                         </a>
                     </div>
